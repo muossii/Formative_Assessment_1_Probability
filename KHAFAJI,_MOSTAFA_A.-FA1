@@ -1,0 +1,80 @@
+---
+title: "FA1_KHAFAJI"
+author: "Mostafa Khafaji"
+date: "1 February 2024"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE}
+library(moments)
+results <- readRDS("results.rds")
+```
+
+## Question 1.
+
+Write the skewness program, and use it to calculate the skewness coefficient of the four examination subjects in results.txt (results.csv). What can you say about these data?
+
+Pearson has given an approximate formula for the skewness that is easier to calculate than the exact formula given in Equation 2.1.
+
+
+
+```{r}
+
+cat("Arch1: Person's Approx: ",3*(mean(results$arch1, na.rm = T)-median(results$arch1, na.rm=TRUE))/sd(results$arch1, na.rm=TRUE),", Actual Skew: ", skewness(results$arch1, na.rm = T),"\n")
+
+cat("Prog1: Person's Approx: ",3*(mean(results$prog1, na.rm = T)-median(results$prog1, na.rm=TRUE))/sd(results$prog1, na.rm=TRUE),", Actual Skew: ", skewness(results$prog1, na.rm = T),"\n")
+
+cat("Arch2: Person's Approx: ",3*(mean(results$arch2, na.rm = T)-median(results$arch2, na.rm=TRUE))/sd(results$arch2, na.rm=TRUE),", Actual Skew: ", skewness(results$arch2, na.rm = T),"\n")
+
+
+cat("Prog2: Person's Approx: ",3*(mean(results$prog2, na.rm = T)-median(results$prog2, na.rm=TRUE))/sd(results$prog2, na.rm=TRUE),", Actual Skew: ", skewness(results$prog2, na.rm = T),"\n")
+
+
+```
+
+The value given by the formula is differentfrom the value given by the function. However, the values are close enough that the difference between them is almost negligible for descriptive purposes, but there might be a problem when applying the/basing on the values on statistical tests
+
+## Question 2
+
+```{r, echo=FALSE}
+females_marks <- c(57, 59, 78, 79, 60, 65, 68, 71, 75, 48, 51, 55, 56, 41, 43, 44, 75, 78, 80, 81, 83, 83, 85)
+males_marks <- c(48, 49, 49, 30, 30, 31, 32, 35, 37, 41, 86, 42, 51, 53, 56, 42, 44, 50, 51, 65, 67, 51, 56, 58, 64, 64, 75)
+
+marks <- data.frame(gender = c(replicate(length(females_marks), "Female"),replicate(length(males_marks), "Male")),
+                    Score = c(females_marks, males_marks))
+
+```
+For the class of 50 students of computing detailed in Exercise 1.1, use R to 
+
+#(a)  form the stem-and-leaf display for each gender, and discuss the advantages of this representation compared to the traditional histogram:
+
+```{r, echo=FALSE}
+
+stem(marks$Score)
+ 
+```
+As you would notice, the stem and leaf acts somewhat like a histogram for the dataset, showing the count of data in each bin. However, unlike the histogram, which completely groups that data into a bin, you can still see the specific data in the stem and leaf graph. With this, you can make more precise observations with the data.
+
+#(b)  construct a box-plot for each gender and discuss the findings. 
+
+```{r, echo=FALSE}
+boxplot(marks$Score ~ marks$gender, col=c("pink","lightblue"), xlab = "Gender", ylab = "Score", main = "Scores by Gender")
+
+```
+The median score by females is much higher than the median score by males.
+
+The middle quartiles, i.e. from 25th to the 75th percentile, of males are more dense than the middle quartiles of females.
+
+The upper queartile of women are more dense than the upper quartile of men.
+
+The lower quartile of females overlap with the two middle quartiles of the males.
+
+The upper quartile of males overlap with the middle quartiles of females.
+
+The outlier in male scores is higher then the upper quartile of females.
+
+
